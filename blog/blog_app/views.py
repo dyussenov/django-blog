@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import redirect
 
 
 def index(request):
@@ -12,3 +12,7 @@ def about(request):
 
 def categories(request, category):
     return HttpResponse(f"Посты с категорией {category}")
+
+
+def contact(request):
+    return redirect("/about")
