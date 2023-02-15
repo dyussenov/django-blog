@@ -3,7 +3,15 @@ from datetime import date
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import redirect
 
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 
+from .forms import CustomUserCreationForm
+
+class SignUpView(CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'
 def index(request):
     return HttpResponse("Index page of blog application")
 
