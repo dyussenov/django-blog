@@ -32,12 +32,20 @@ class QuestionsListView(ListView):
     model = Question
     template_name = 'questions_home.html'
     context_object_name = 'questions'
+    paginate_by = 10
 
     def get_queryset(self):
         questions = Question.objects.all()
         if self.kwargs.get('category_slug'):
             return questions.filter(category__slug=self.kwargs['category_slug'])
         return questions
+
+
+    '''def get_context_data(self, **kwargs):
+        context = super(QuestionsListView, self).get_context_data(**kwargs)
+        context['filter'] = self.request.GET.get('filter', '')
+        context['orderby'] = self.request.GET.get('orderby', '')
+        return context'''
 
 
 class QuestionView(DetailView):
@@ -51,7 +59,7 @@ def index(request):
     return render(request, "home.html")
 
 
-def category_questions(request, category_slug):
+'''def category_questions(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     questions = Question.objects.filter(category=category)
     context = {
@@ -59,7 +67,7 @@ def category_questions(request, category_slug):
         'questions': questions
     }
     return render(request, "questions.html", context)
-
+'''
 
 def page404(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
