@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <div id="multi-bg" class=" mb-4 bg-light rounded-3">
+    <div id="multi-bg" class="p-12 mb-4 bg-light rounded-3">
       <div class="container-fluid p-5">
           {% if user.is_authenticated %}
                 <h1 class="display-5 fw-bold">Welcome {{user.username}}!</h1>
