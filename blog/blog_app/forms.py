@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 
+
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         max_length=255,
@@ -25,7 +26,7 @@ class CustomUserCreationForm(UserCreationForm):
         )
     )
     password1 = forms.CharField(
-        label="password1",
+        label="password",
         widget=forms.PasswordInput(attrs={
             'class': 'w-100 form-control',
             'placeholder': 'password1',
@@ -34,18 +35,20 @@ class CustomUserCreationForm(UserCreationForm):
         )
     )
     password2 = forms.CharField(
-        label="password2",
+        label="repeat password",
         widget=forms.PasswordInput(attrs={
             'class': 'w-100 form-control',
-            'placeholder': 'password2',
+            'placeholder': 'repeat password',
             'id': 'c'
 
         }
         )
     )
+
     class Meta:
         model = CustomUser
         fields = ('username', 'email')
+
 
 class CustomUserChangeForm(UserChangeForm):
 
