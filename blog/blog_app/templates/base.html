@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+{% load blog_app_tags %}
+{% get_categories as categories %}
 <html class="h-100">
 <head>
   <meta charset="utf-8">
@@ -26,17 +28,18 @@
             Categories
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Category</a></li>
-            <li><a class="dropdown-item" href="#">Another category</a></li>
+            <li><a class="dropdown-item" href="#">All categories</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            {% for cat in categories %}
+              <li><a class="dropdown-item" href="#">{{ cat.title }}</a></li>
+            {% endfor %}
+
           </ul>
         </li>
       </ul>
     </div>
       <form class="d-flex w-50">
         <div class="input-group">
-
         <input class="form-control input-sm" type="search" placeholder="Type your question here" aria-label="Search">
         <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
         </div>

@@ -11,8 +11,10 @@
 </head>
 <body class="d-flex align-items-center justify-items-center h-100">
   <main class="container mt-4">
+    <div class="form-signin d-flex justify-content-center ">
     {% block content %}
     {% endblock %}
+    </div>
     <a class="dropup position-fixed m-5 top-0 start-0 btn btn-md btn-outline-secondary" href="{% url 'home' %}" role="button">
        <i class="bi bi-arrow-left-circle"></i> Back to website
     </a>
@@ -25,6 +27,28 @@
 </footer>
 </body>
 </html>
+
+<style>
+  #a {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#b {
+margin-bottom: -1px;
+  border-radius: 0;
+}
+
+#c {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+</style>
 
 <script>
   var myModal = document.getElementById('myModal')

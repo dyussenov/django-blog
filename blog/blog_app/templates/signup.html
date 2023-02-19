@@ -3,14 +3,14 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="form-signin d-flex justify-content-center ">
+
   <form class="d-flex w-50 flex-column align-items-center" method="post">
-    <h2 class="h3 mb-3 fw-normal">Sign up</h2>
+    <h2 class="h3 mb-3 fw-normal">Heep Udnerflow</h2>
   {% csrf_token %}
   {% for f in form %}
     <div class="w-100 form-floating">
       {{ f }}
-      <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>
+      <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>
     </div>
   {% endfor %}
   <div class="checkbox mb-3">
@@ -20,27 +20,5 @@
     </div>
   <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
 </form>
-</div>
 
-<style>
-  #a {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-#b {
-margin-bottom: -1px;
-  border-radius: 0;
-}
-
-#c {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.form-signin .form-floating:focus-within {
-  z-index: 2;
-}
-</style>
 {% endblock %}
