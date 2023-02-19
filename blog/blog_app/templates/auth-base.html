@@ -19,7 +19,15 @@
        <i class="bi bi-arrow-left-circle"></i> Back to website
     </a>
   </main>
-
+  <div class="error-container">
+    {% for f in form %}
+      {% if f.errors %}
+       <div class="alert alert-danger m-2" role="alert">
+        {{ f.errors }}
+      </div>
+      {% endif %}
+    {% endfor %}
+</div>
 <footer class="footer position-absolute bottom-0 w-100">
   <div class="container w-100">
     <span class="text-muted">Heep underflow 2022-2023</span>
@@ -48,13 +56,18 @@ margin-bottom: -1px;
 .form-signin .form-floating:focus-within {
   z-index: 2;
 }
+
+.error-container{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 </style>
 
 <script>
-  var myModal = document.getElementById('myModal')
-  var myInput = document.getElementById('myInput')
 
-  myModal.addEventListener('shown.bs.modal', function () {
-  myInput.focus()
-})
+  var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
+  container: 'body'
+  })
+
 </script>
