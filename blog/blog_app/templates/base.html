@@ -62,7 +62,7 @@
   <main class="container-lg mt-4">
     {% block content %}
     {% endblock %}
-    <a class="dropup position-fixed m-5 bottom-0 end-0 btn btn-md btn-outline-success" href="#" role="button">
+    <a class="dropup position-fixed m-5 bottom-0 end-0 btn btn-md btn-outline-success" href="{% url 'add_question' %}" role="button">
        <i class="bi bi-question-circle"></i> Ask a question
     </a>
   </main>

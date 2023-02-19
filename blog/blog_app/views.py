@@ -6,7 +6,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, AddQuestionForm
+
 
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
@@ -14,6 +15,9 @@ class SignUpView(CreateView):
     template_name = 'signup.html'
 
 
+def add_question(request):
+    form = AddQuestionForm()
+    return render(request, "add_question.html", {'form': form})
 def index(request):
     return render(request, "home.html")
 

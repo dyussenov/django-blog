@@ -1,7 +1,7 @@
 # users/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, UsernameField
-from .models import CustomUser, Category
+from .models import CustomUser, Category, Question
 
 
 class UserLoginForm(AuthenticationForm):
@@ -77,3 +77,12 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = "__all__"
 
+
+class AddQuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['title', 'body', 'category']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-input'}),
+            'body': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
+        }
