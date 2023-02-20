@@ -79,6 +79,10 @@ class CategoryForm(forms.ModelForm):
 
 
 class AddQuestionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].empty_label = "Choose an option"
+
     class Meta:
         model = Question
         fields = ['title', 'body', 'category']

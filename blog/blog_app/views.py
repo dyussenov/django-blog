@@ -2,7 +2,8 @@ from datetime import date
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import redirect, render
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
@@ -15,9 +16,17 @@ class SignUpView(CreateView):
     template_name = 'signup.html'
 
 
+@login_required
 def add_question(request):
-    form = AddQuestionForm()
-    return render(request, "add_question.html", {'form': form})
+    if request.method == 'POST':
+        user = get_user_model()
+        form = AddQuestionForm(request.POST)
+        print(form.data, request.user.id)
+        return redirect('home')
+    else:
+        form = AddQuestionForm()
+        return render(request, "add_question.html", {'form': form})
+
 def index(request):
     return render(request, "home.html")
 
