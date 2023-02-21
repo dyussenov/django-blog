@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
 from .forms import CustomUserCreationForm, AddQuestionForm
-
+from .models import Question, Category, CustomUser
 
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
@@ -21,6 +21,13 @@ def add_question(request):
     if request.method == 'POST':
         user = get_user_model()
         form = AddQuestionForm(request.POST)
+        new_question = Question(
+            author=CustomUser(pk=request.user.id),
+            title=form.data['title'],
+            body=form.data['body'],
+            category=Category.objects.get(pk=form.data['category'][0])
+        )
+        new_question.save()
         print(form.data, request.user.id)
         return redirect('home')
     else:
