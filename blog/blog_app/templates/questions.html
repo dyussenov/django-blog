@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} Questions {% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{{ cat_selected.title }} questions</h2>
+  {% for q in questions%}
+    {{ q.title }}
+    {{ q.body }}
+    {{ q.author }}
+    {{ q.time_create }}
+<hr>
+  {% endfor %}
+{% endblock %}

@@ -31,7 +31,11 @@
             <li><a class="dropdown-item" href="{% url 'categories_list' %}">All categories</a></li>
             <li><hr class="dropdown-divider"></li>
             {% for cat in categories %}
-              <li><a class="dropdown-item" href="#">{{ cat.title }}</a></li>
+              {% if cat.pk == cat_selected.pk %}
+		          <li class="dropdown-item text-primary">{{ cat.title }}</li>
+	          {% else %}
+		          <li><a class="dropdown-item" href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
+	          {% endif %}
             {% endfor %}
 
           </ul>
@@ -59,8 +63,9 @@
 
   </div>
 </nav>
-  <main class="container-lg mt-4">
+  <main class="position-relative container-lg mt-4">
     {% block content %}
+
     {% endblock %}
     <a class="dropup position-fixed m-5 bottom-0 end-0 btn btn-md btn-outline-success" href="{% url 'add_question' %}" role="button">
        <i class="bi bi-question-circle"></i> Ask a question

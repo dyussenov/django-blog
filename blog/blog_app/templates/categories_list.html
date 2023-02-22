@@ -6,7 +6,10 @@
 
 {% for cat in categories %}
 <div class="card text-white bg-dark mb-3">
-  <div class="card-header"><h5 class="card-title">{{ cat.title }}</h5></div>
+  <div class="card-header d-flex justify-content-between">
+    <h5 class="card-title">{{ cat.title }}</h5>
+    <a href="{{ cat.get_absolute_url }}" class="btn btn-white btn-sm active" role="button" aria-pressed="true">Go to questions</a>
+  </div>
   <div class="card-body">
     <p class="card-text">{{ cat.description }}</p>
   </div>

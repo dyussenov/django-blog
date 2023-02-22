@@ -1,7 +1,7 @@
 from datetime import date
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
@@ -42,8 +42,14 @@ def about(request):
     return HttpResponse("About blog application")
 
 
-def categories(request, category):
-    return HttpResponse(f"Посты с категорией {category}")
+def category_questions(request, category_slug):
+    category = get_object_or_404(Category, slug=category_slug)
+    questions = Question.objects.filter(category=category)
+    context = {
+        'cat_selected': category,
+        'questions': questions
+    }
+    return render(request, "questions.html", context)
 
 
 def contact(request):
