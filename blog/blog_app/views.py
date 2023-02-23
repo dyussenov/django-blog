@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-
+from django.utils.text import slugify
 from .forms import CustomUserCreationForm, AddQuestionForm
 from .models import Question, Category, CustomUser
+
 
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
@@ -16,14 +17,18 @@ class SignUpView(CreateView):
     template_name = 'signup.html'
 
 
+def show_question(request, question_slug):
+    return render(request, 'question.html')
+
 @login_required
 def add_question(request):
     if request.method == 'POST':
-        user = get_user_model()
+        #user = get_user_model()
         form = AddQuestionForm(request.POST)
         new_question = Question(
             author=CustomUser(pk=request.user.id),
             title=form.data['title'],
+            slug=slugify(form.data['title']),
             body=form.data['body'],
             category=Category.objects.get(pk=form.data['category'][0])
         )
@@ -33,6 +38,7 @@ def add_question(request):
     else:
         form = AddQuestionForm()
         return render(request, "add_question.html", {'form': form})
+
 
 def index(request):
     return render(request, "home.html")
@@ -59,8 +65,9 @@ def contact(request):
 def page404(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
+
 def archive(request, year):
-    if(int(year) > date.today().year or int(year) < 2015):
+    if int(year) > date.today().year or int(year) < 2015:
         raise Http404()
  
     return HttpResponse(f"<h1>Архив по годам</h1>{year}</p>")

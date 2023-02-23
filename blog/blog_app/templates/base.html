@@ -32,7 +32,7 @@
             <li><hr class="dropdown-divider"></li>
             {% for cat in categories %}
               {% if cat.pk == cat_selected.pk %}
-		          <li class="dropdown-item text-primary">{{ cat.title }}</li>
+		          <li class="dropdown-item active">{{ cat.title }}</li>
 	          {% else %}
 		          <li><a class="dropdown-item" href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
 	          {% endif %}

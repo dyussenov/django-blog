@@ -41,6 +41,16 @@ class Question(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, null=True)
     body = models.TextField()
 
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('show_question', kwargs={
+            #'category_slug': self.category.slug,
+            'question_slug': self.slug
+            }
+        )
+
 
 class Answer(models.Model):
     author = models.ForeignKey(
