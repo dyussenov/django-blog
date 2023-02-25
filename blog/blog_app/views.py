@@ -7,8 +7,9 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.utils.text import slugify
-from .forms import CustomUserCreationForm, AddQuestionForm
-from .models import Question, Category, CustomUser
+from .forms import *
+from .models import *
+from django.views.generic import ListView
 
 
 class SignUpView(CreateView):
@@ -65,9 +66,9 @@ def contact(request):
 def page404(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
-
+'''
 def archive(request, year):
     if int(year) > date.today().year or int(year) < 2015:
         raise Http404()
  
-    return HttpResponse(f"<h1>Архив по годам</h1>{year}</p>")
+    return HttpResponse(f"<h1>Архив по годам</h1>{year}</p>")'''

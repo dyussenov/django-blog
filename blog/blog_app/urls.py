@@ -13,6 +13,6 @@ urlpatterns = [
     path('questions/<slug:question_slug>/', show_question, name='show_question'),
     path('question/', add_question, name='add_question'),
     #path('question/', add_question, name='add_question'),
-    path('contact/', contact),
-    path('archive/<int:year>/', archive)
+    #path('contact/', contact),
+    #path('archive/<int:year>/', archive)
 ]
