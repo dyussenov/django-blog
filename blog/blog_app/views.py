@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.utils.text import slugify
 from .forms import *
 from .models import *
@@ -18,7 +18,12 @@ class SignUpView(CreateView):
     template_name = 'signup.html'
 
 
-class QuestionsHome(ListView):
+class AddQuestionView(CreateView):
+    form_class = AddQuestionForm
+    template_name = 'add_question.html'
+
+
+class QuestionsListView(ListView):
     model = Question
     template_name = 'questions_home.html'
     context_object_name = 'questions'
@@ -28,6 +33,13 @@ class QuestionsHome(ListView):
         if self.kwargs.get('category_slug'):
             return questions.filter(category__slug=self.kwargs['category_slug'])
         return questions
+
+
+class QuestionView(DetailView):
+    model = Question
+    template_name = 'question.html'
+    slug_url_kwarg = 'question_slug'
+    context_object_name = 'question'
 
 
 def show_question(request, question_slug):

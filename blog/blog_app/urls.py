@@ -9,7 +9,7 @@ urlpatterns = [
     path('categories/', TemplateView.as_view(template_name='categories_list.html'), name='categories_list'),
     path('categories/<slug:category_slug>/questions/', category_questions, name='category_questions'),
     #path('categories/<slug:category_slug>/questions/<slug:question_slug>/', show_question, name='show_question'),
-    path('q/<slug:question_slug>/', show_question, name='show_question'),
-    path('question/', add_question, name='add_question'),
-    path('questions/<slug:category_slug>/', QuestionsHome.as_view(), name='questions_home'),
+    path('q/<slug:question_slug>/', QuestionView.as_view(), name='show_question'),
+    path('question/', AddQuestionView.as_view(), name='add_question'),
+    path('questions/<slug:category_slug>/', QuestionsListView.as_view(), name='questions_home'),
 ]
