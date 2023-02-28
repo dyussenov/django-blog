@@ -15,9 +15,7 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "slug")
-    search_fields = ('title',)
-    prepopulated_fields = {"slug": ("title",)}
+    list_display = ("title", "description")
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

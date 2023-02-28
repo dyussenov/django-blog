@@ -9,12 +9,12 @@
                 <h1 class="display-5 fw-bold">Welcome {{user.username}}!</h1>
                 <p class="col-md-8 fs-4">You can set up your skills and change your tags in profile settings</p>
                 <button class="btn btn-primary btn-lg" type="button">Profile settings</button>
-            {% else %}
+          {% else %}
                 <h1 class="display-5 fw-bold">Welcome!</h1>
                 <p class="col-md-8 fs-4">Please log in or sign up to set up your skills and change your tags in profile settings</p>
                 <a class="btn btn-lg btn-light" href="{% url 'login' %}" role="button">Log in</a>
                 <a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign up</a>
-            {% endif %}
+          {% endif %}
       </div>
     </div>
 

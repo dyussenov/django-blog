@@ -6,16 +6,28 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from django.views.generic import ListView
 from django.utils.text import slugify
 from .forms import *
 from .models import *
-from django.views.generic import ListView
 
 
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
+
+
+class QuestionsHome(ListView):
+    model = Question
+    template_name = 'questions_home.html'
+    context_object_name = 'questions'
+
+    def get_queryset(self):
+        questions = Question.objects.all()
+        if self.kwargs.get('category_slug'):
+            return questions.filter(category__slug=self.kwargs['category_slug'])
+        return questions
 
 
 def show_question(request, question_slug):
