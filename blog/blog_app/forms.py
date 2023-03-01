@@ -16,7 +16,9 @@ class UserLoginForm(AuthenticationForm):
             'placeholder': 'qwerqwer',
             'id': 'c',
         }
-))
+        )
+    )
+
 
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
@@ -87,6 +89,22 @@ class AddQuestionForm(forms.ModelForm):
         model = Question
         fields = ['title', 'body', 'category']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-input'}),
-            'body': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
+            'title': forms.TextInput(attrs={
+                'class': 'w-100 form-control',
+                'placeholder': 'title',
+                'id': 'a'
+            }
+            ),
+            'body': forms.Textarea(attrs={
+                'class': 'w-100 form-control h-50',
+                'placeholder': 'body',
+                'id': 'c'
+            }
+            ),
+            'category': forms.Select(attrs={
+                'class': 'w-50 form-select',
+                'id': 'e'
+            }
+            ),
         }
+

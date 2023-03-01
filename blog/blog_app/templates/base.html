@@ -104,3 +104,43 @@
   myInput.focus()
 })
 </script>
+
+<style>
+  #a {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#b {
+margin-bottom: -1px;
+  border-radius: 0;
+}
+
+#c {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#e{
+  margin: 10px 0;
+}
+
+.form-floating:focus-within {
+  z-index: 2;
+}
+
+.error-container{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+</style>
+
+<script>
+
+  var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
+  container: 'body'
+  })
+
+</script>
