@@ -1,8 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import redirect, render, get_object_or_404
-#from django.contrib.auth.decorators import login_required
-#from django.contrib.auth import get_user_model
-#from django.views.generic.edit import CreateView
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
@@ -53,6 +50,11 @@ class QuestionView(DetailView):
     template_name = 'question.html'
     slug_url_kwarg = 'question_slug'
     context_object_name = 'question'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(QuestionView, self).get_context_data(*args, **kwargs)
+        context['answer_form'] = AddAnswerForm
+        return context
 
 
 def index(request):

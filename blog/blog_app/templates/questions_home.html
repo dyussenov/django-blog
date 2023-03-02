@@ -20,8 +20,13 @@
 
   {% for q in questions%}
 <div class="card">
-  <div class="card-header">
+  <div class="card-header d-flex justify-content-between">
     <h3>{{ q.title }}</h3>
+    {% if q.is_closed %}
+      <div><span class="badge text-bg-success">Answered</span></div>
+      {% else %}
+      <div><span class="badge text-bg-danger">Unanswered</span></div>
+      {% endif %}
   </div>
   <div class="card-body">
     <p class="card-text">{{ q.body }}</p>

@@ -1,7 +1,6 @@
-# users/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, UsernameField
-from .models import CustomUser, Category, Question
+from .models import CustomUser, Category, Question, Answer
 
 
 class UserLoginForm(AuthenticationForm):
@@ -108,3 +107,16 @@ class AddQuestionForm(forms.ModelForm):
             ),
         }
 
+
+class AddAnswerForm(forms.ModelForm):
+
+    class Meta:
+        model = Answer
+        fields = ['body']
+        widgets = {
+            'body': forms.Textarea(attrs={
+                'class': 'w-100 form-control h-50',
+                'placeholder': 'body',
+            }
+            )
+        }

@@ -19,7 +19,7 @@ class Category(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('category_questions', kwargs={'category_slug': self.slug})
+        return reverse('questions_home', kwargs={'category_slug': self.slug})
 
     class Meta:
         verbose_name = 'Category'
@@ -37,16 +37,17 @@ class Question(models.Model):
         'blog_app.CustomUser',
         on_delete=models.CASCADE
     )
+    likes = models.IntegerField(default=0)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     time_create = models.DateTimeField(auto_now_add=True, null=True)
     body = models.TextField()
+    is_closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('show_question', kwargs={
-            #'category_slug': self.category.slug,
             'question_slug': self.slug
             }
         )
@@ -61,3 +62,6 @@ class Answer(models.Model):
         Question,
         on_delete=models.CASCADE
     )
+    likes = models.IntegerField(default=0)
+    body = models.TextField(default="")
+    is_true_answer = models.BooleanField(default=0)
