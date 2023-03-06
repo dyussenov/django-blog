@@ -33,10 +33,10 @@
 
 <hr>
 <h4>Add answer</h4>
-<form action="{% url 'add_question' %}" class="d-flex w-100 flex-column align-items-start" method="post" enctype="multipart/form-data">
+<form class="d-flex w-100 flex-column align-items-start" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    {% for f in answer_form %}
+    {% for f in form %}
     <div class="w-100 form-floating">
       {{ f }}
     </div>
@@ -44,4 +44,25 @@
 
     <button class="mt-4 btn btn-sm btn-primary" type="submit">Send answer</button>
 </form>
+<hr>
+<h4>Answers</h4>
+{% for answer in answers %}
+        <div class=" w-100 d-flex my-4">
+            <div class="d-flex flex-column align-items-center me-2">
+
+<button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-caret-up-fill"></i></button>
+                <h4>13</h4>
+<button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-caret-down-fill"></i></button>
+            </div>
+  <div class="card w-100">
+      <div class="card-body">
+    <p class="card-text">{{ answer.body }}</p>
+  </div>
+  <div class="card-footer text-muted">
+   {{ answer.author }} 2 days ago
+  </div>
+  </div>
+
+    </div>
+    {% endfor %}
 {% endblock %}
