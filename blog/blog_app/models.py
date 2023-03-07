@@ -42,6 +42,12 @@ class Question(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, null=True)
     body = models.TextField()
     is_closed = models.BooleanField(default=False)
+    favourites = models.ManyToManyField(
+        CustomUser,
+        related_name='favourite',
+        default=None,
+        blank=True
+    )
 
     def __str__(self):
         return self.title

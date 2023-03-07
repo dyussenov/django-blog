@@ -1,10 +1,11 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.utils.text import slugify
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.decorators import login_required
 
 from .forms import *
 from .models import *
@@ -37,6 +38,16 @@ class QuestionsListView(ListView):
         if self.kwargs.get('category_slug'):
             return questions.filter(category__slug=self.kwargs['category_slug'])
         return questions
+
+
+@login_required
+def favourite_add(request, question_id):
+    post = get_object_or_404(Question, id=question_id)
+    if post.favourites.filter(id=request.user.id).exists():
+        post.favourites.remove(request.user)
+    else:
+        post.favourites.add(request.user)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 class QuestionView(FormMixin, DetailView):
