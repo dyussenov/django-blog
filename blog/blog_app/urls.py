@@ -10,5 +10,7 @@ urlpatterns = [
     path('q/<slug:question_slug>/', QuestionView.as_view(), name='show_question'),
     path('question/', login_required(AddQuestionView.as_view()), name='add_question'),
     path('questions/<slug:category_slug>/', QuestionsListView.as_view(), name='questions_home'),
-    path('fav/<int:question_id>/', favourite_add, name='favourite_add'),
+    path('bookmarks/<int:question_id>/', favourite_add, name='favourite_add'),
+    path('bookmarks/', favourite_list, name='bookmarks'),
+
 ]

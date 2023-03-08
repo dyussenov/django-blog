@@ -50,6 +50,14 @@ def favourite_add(request, question_id):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
+@ login_required
+def favourite_list(request):
+    bookmarks = Question.objects.filter(favourites=request.user)
+    return render(request,
+                  'bookmarks.html',
+                  {'bookmarks': bookmarks})
+
+
 class QuestionView(FormMixin, DetailView):
     model = Question
     template_name = 'question.html'
@@ -60,6 +68,7 @@ class QuestionView(FormMixin, DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(QuestionView, self).get_context_data(*args, **kwargs)
         context['answers'] = Answer.objects.filter(question_id=self.object)
+        context['is_bookmark'] = True if self.object.favourites.filter(id=self.request.user.id) else False
         return context
 
     def get_success_url(self):
