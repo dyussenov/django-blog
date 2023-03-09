@@ -55,22 +55,57 @@
 <hr>
 <h4>Answers</h4>
 {% for answer in answers %}
-        <div class=" w-100 d-flex my-4">
-            <div class="d-flex flex-column align-items-center me-2">
-
-<button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-caret-up-fill"></i></button>
-                <h4>13</h4>
-<button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-caret-down-fill"></i></button>
-            </div>
+<div class=" w-100 d-flex my-4">
   <div class="card w-100">
       <div class="card-body">
     <p class="card-text">{{ answer.body }}</p>
   </div>
-  <div class="card-footer text-muted">
-   {{ answer.author }} 2 days ago
+  <div class="card-footer w-100 d-flex justify-content-between text-muted">
+      <div>
+          <button class="btn btn-link text-dark p-0 border-0 btn-outline-light like-button" id="like{{answer.id}}" value="{{answer.id}}">
+            <i class="bi bi-hand-thumbs-up"></i>
+          </button>
+      {{ answer.likes_count }}
+      </div>
+
+   <div>
+       {{ answer.author }} 2 days ago
+   </div>
+
   </div>
   </div>
 
     </div>
     {% endfor %}
+
+<script>
+    const onClick = (event) => {
+  if (event.target.nodeName === 'BUTTON') {
+    console.log(event.target.value);
+    $.ajax({
+      type: 'POST',
+      url: '{% url "like" %}',
+      data: {
+        question_id: event.target.value,
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+        action: 'post'
+      },
+      success: function (json) {
+        document.getElementById(event.target.id).innerHTML = json['result']
+      },
+      error: function (xhr, errmsg, err) {
+
+      }
+    });
+  }
+}
+window.addEventListener('click', onClick);
+
+ /*     $(document).on('click', '.like-button', function (e) {
+    e.preventDefault();
+
+  })*/
+
+</script>
+
 {% endblock %}

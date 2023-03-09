@@ -12,5 +12,5 @@ urlpatterns = [
     path('questions/<slug:category_slug>/', QuestionsListView.as_view(), name='questions_home'),
     path('bookmarks/<int:question_id>/', favourite_add, name='favourite_add'),
     path('bookmarks/', favourite_list, name='bookmarks'),
-
+    path('like/', like, name='like'),
 ]

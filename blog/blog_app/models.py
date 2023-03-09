@@ -68,7 +68,7 @@ class Answer(models.Model):
         Question,
         on_delete=models.CASCADE
     )
-    likes = models.ManyToManyField(CustomUser, )
+    likes = models.ManyToManyField(CustomUser, related_name='like', default=None, blank=True)
     likes_count = models.IntegerField(default=0)
     body = models.TextField(default="")
     is_true_answer = models.BooleanField(default=0)

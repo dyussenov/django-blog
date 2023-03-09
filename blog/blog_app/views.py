@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 
 from django.urls import reverse_lazy
@@ -56,6 +56,26 @@ def favourite_list(request):
     return render(request,
                   'bookmarks.html',
                   {'bookmarks': bookmarks})
+
+
+@login_required
+def like(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        answer_id = int(request.POST.get('question_id'))
+        answer = get_object_or_404(Answer, id=answer_id)
+        if answer.likes.filter(id=request.user.id).exists():
+            answer.likes.remove(request.user)
+            answer.likes_count -= 1
+            result = answer.likes_count
+            answer.save()
+        else:
+            answer.likes.add(request.user)
+            answer.likes_count += 1
+            result = answer.likes_count
+            answer.save()
+
+        return JsonResponse({'result': result, })
 
 
 class QuestionView(FormMixin, DetailView):
