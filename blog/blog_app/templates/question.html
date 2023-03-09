@@ -61,11 +61,13 @@
     <p class="card-text">{{ answer.body }}</p>
   </div>
   <div class="card-footer w-100 d-flex justify-content-between text-muted">
-      <div>
-          <button class="btn btn-link text-dark p-0 border-0 btn-outline-light like-button" id="like{{answer.id}}" value="{{answer.id}}">
-            <i class="bi bi-hand-thumbs-up"></i>
+      <div class="btn-group">
+          <button  type="button" class="btn " id="{{answer.id}}" value="{{answer.id}}">
+            like
           </button>
-      {{ answer.likes_count }}
+          <div class="btn btn-success disabled" id="like-{{answer.id}}-value">
+                {{ answer.likes_count }}
+          </div>
       </div>
 
    <div>
@@ -91,7 +93,7 @@
         action: 'post'
       },
       success: function (json) {
-        document.getElementById(event.target.id).innerHTML = json['result']
+        document.getElementById('like-'+event.target.id+'-value').innerHTML = json['result']
       },
       error: function (xhr, errmsg, err) {
 
