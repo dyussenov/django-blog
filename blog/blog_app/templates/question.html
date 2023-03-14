@@ -62,16 +62,22 @@
   </div>
   <div class="card-footer w-100 d-flex justify-content-between text-muted">
       <div class="btn-group">
-          <button  type="button" class="btn " id="{{answer.id}}" value="{{answer.id}}">
-            like
-          </button>
           <div class="btn btn-success disabled" id="like-{{answer.id}}-value">
                 {{ answer.likes_count }}
           </div>
+          <button  type="button" class="btn btn-outline-success" id="{{answer.id}}" value="{{answer.id}}">
+            like
+          </button>
           {% if request.user.pk == question.author.pk %}
-            <div class="btn btn-success">
-              set as true
-            </div>
+            {% if answer.is_true_answer %}
+              <a href="{% url 'set-true-answer' answer.id %}" class="btn btn-outline-danger" role="button">
+                  Unmark as true
+              </a>
+            {% else %}
+                <a href="{% url 'set-true-answer' answer.id %}" class="btn btn-outline-success" role="button">
+                  Mark as true
+              </a>
+            {% endif %}
           {% endif %}
           {% if answer.is_true_answer %}
           <div class="btn btn-success disabled" id="like-{{answer.id}}-value" >

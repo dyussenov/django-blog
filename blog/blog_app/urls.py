@@ -13,4 +13,5 @@ urlpatterns = [
     path('bookmarks/<int:question_id>/', favourite_add, name='favourite_add'),
     path('bookmarks/', favourite_list, name='bookmarks'),
     path('like/', like, name='like'),
+    path('set-true-answer/<int:answer_id>', change_answer_status, name='set-true-answer'),
 ]

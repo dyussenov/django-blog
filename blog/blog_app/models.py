@@ -76,6 +76,25 @@ class Answer(models.Model):
     def __str__(self):
         return self.body
 
-    def add_true_answer(self):
-        Question.objects.filter(pk=self.question.pk).update(is_closed=True)
-        Answer.objects.filter(pk=self.pk).update(is_true_answer=True)
+    def change_status(self):
+        question = Question.objects.get(pk=self.question.pk)
+        answer = Answer.objects.get(pk=self.pk)
+        if question.is_closed and answer.is_true_answer:
+            answer.is_true_answer = False
+            answer.save()
+
+            question.is_closed = False
+            question.save()
+        elif question.is_closed:
+            Answer.objects.filter(question=question).update(is_true_answer=False)
+            answer.is_true_answer = True
+            answer.save()
+
+            question.is_closed = True
+            question.save()
+        else:
+            answer.is_true_answer = True
+            answer.save()
+
+            question.is_closed = True
+            question.save()

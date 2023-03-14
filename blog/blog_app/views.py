@@ -1,3 +1,4 @@
+from random import choice
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 
@@ -9,6 +10,13 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import *
 from .models import *
+
+
+def get_random_questions(request, amount):
+    pks = Question.objects.values_list('pk', flat=True)
+    random_pk = choice(pks)
+    random_obj = Question.objects.get(pk=random_pk)
+    return JsonResponse({'result': random_obj })
 
 
 class SignUpView(CreateView):
@@ -39,9 +47,16 @@ class QuestionsListView(ListView):
             return questions.filter(category__slug=self.kwargs['category_slug'])
         return questions
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(QuestionsListView, self).get_context_data(*args, **kwargs)
+        context['cat_selected'] = self.kwargs['category_slug']
+        return context
+
+
 @login_required
-def set_as_true_answer(request, answer_id, question_id):
-    pass
+def change_answer_status(request, answer_id):
+    get_object_or_404(Answer, id=answer_id).change_status()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 @login_required
@@ -91,7 +106,7 @@ class QuestionView(FormMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(QuestionView, self).get_context_data(*args, **kwargs)
-        context['answers'] = Answer.objects.filter(question_id=self.object)
+        context['answers'] = Answer.objects.filter(question_id=self.object).order_by('-likes_count')
         context['is_bookmark'] = True if self.object.favourites.filter(id=self.request.user.id) else False
         return context
 
