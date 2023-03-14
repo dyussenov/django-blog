@@ -72,3 +72,10 @@ class Answer(models.Model):
     likes_count = models.IntegerField(default=0)
     body = models.TextField(default="")
     is_true_answer = models.BooleanField(default=0)
+
+    def __str__(self):
+        return self.body
+
+    def add_true_answer(self):
+        Question.objects.filter(pk=self.question.pk).update(is_closed=True)
+        Answer.objects.filter(pk=self.pk).update(is_true_answer=True)

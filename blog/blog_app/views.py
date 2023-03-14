@@ -39,6 +39,10 @@ class QuestionsListView(ListView):
             return questions.filter(category__slug=self.kwargs['category_slug'])
         return questions
 
+@login_required
+def set_as_true_answer(request, answer_id, question_id):
+    pass
+
 
 @login_required
 def favourite_add(request, question_id):
@@ -50,7 +54,7 @@ def favourite_add(request, question_id):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-@ login_required
+@login_required
 def favourite_list(request):
     bookmarks = Question.objects.filter(favourites=request.user)
     return render(request,
@@ -115,4 +119,4 @@ def index(request):
 
 
 def page404(request, exception):
-    return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+    return HttpResponseNotFound('<h1>Page not found</h1>')

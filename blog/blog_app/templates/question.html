@@ -68,18 +68,26 @@
           <div class="btn btn-success disabled" id="like-{{answer.id}}-value">
                 {{ answer.likes_count }}
           </div>
+          {% if request.user.pk == question.author.pk %}
+            <div class="btn btn-success">
+              set as true
+            </div>
+          {% endif %}
+          {% if answer.is_true_answer %}
+          <div class="btn btn-success disabled" id="like-{{answer.id}}-value" >
+              <i class="bi bi-check-circle-fill"></i>
+          </div>
+          {% endif %}
       </div>
 
    <div>
        {{ answer.author }} 2 days ago
    </div>
-
   </div>
   </div>
 
     </div>
     {% endfor %}
-
 <script>
     const onClick = (event) => {
   if (event.target.nodeName === 'BUTTON') {
