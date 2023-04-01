@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Add question{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'add_question' %}" class="d-flex w-50 flex-column align-items-start" method="post" enctype="multipart/form-data">
+    <h2 class="h3 mb-3 fw-normal">New question</h2>
+    {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    {% for f in form %}
+    <div class="w-100 form-floating">
+      {{ f }}
+      <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>
+    </div>
+    {% endfor %}
+
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Ask question</button>
+</form>
+
+{% endblock %}

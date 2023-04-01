@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load static %}
+{% load blog_app_tags %}
+{% get_categories as categories %}
+<html class="h-100">
+<head>
+  <meta charset="utf-8">
+  <link type="text/css" href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" >
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <title>{% block title %}Q&A template{% endblock %}</title>
+</head>
+<body class="d-flex flex-column justify-items-center h-100">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div class="d-flex">
+      <a class="navbar-brand" href="{% url 'home' %}">Heep Udnerflow</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'categories_list' %}">All categories</a></li>
+            <li><hr class="dropdown-divider"></li>
+            {% for cat in categories %}
+              {% if cat.pk == cat_selected.pk %}
+		          <li class="dropdown-item active">{{ cat.title }}</li>
+	          {% else %}
+		          <li><a class="dropdown-item" href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
+	          {% endif %}
+            {% endfor %}
+
+          </ul>
+        </li>
+      </ul>
+    </div>
+      <form class="d-flex w-50">
+        <div class="input-group">
+        <input class="form-control input-sm" type="search" placeholder="Type your question here" aria-label="Search">
+        <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+        </div>
+      </form>
+      <div class="d-flex align-items-center">
+      {% if user.is_authenticated %}
+        <div class="dropdown">
+  <button class="btn btn-sm btn-secondary dropdown-toggle me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    {{ user.username }}
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><a class="dropdown-item" href="{% url 'bookmarks' %}">Bookmarks</a></li>
+    <li><button type="button" class="btn dropdown-item btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Log out
+        </button></li>
+
+  </ul>
+</div>
+
+        {% else %}
+      <a class="btn btn-sm btn-light me-2" href="{% url 'login' %}" role="button">Log in</a>
+      <a class="btn btn-sm btn-primary" href="{% url 'signup' %}" role="button">Sign up</a>
+    {% endif %}
+    </div>
+
+
+  </div>
+</nav>
+  <main class="position-relative container-lg mt-4">
+    {% block content %}
+
+    {% endblock %}
+    <a class="dropup position-fixed m-5 bottom-0 end-0 btn btn-md btn-outline-success" href="{% url 'add_question' %}" role="button">
+       <i class="bi bi-question-circle"></i> Ask a question
+    </a>
+  </main>
+
+<footer class="footer mt-auto py-3 bg-light">
+  <div class="container">
+    <span class="text-muted">Heep underflow 2022-2023</span>
+  </div>
+</footer>
+<div id="exampleModal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-start">
+        <p class="mb-0 me-1 text-warning"><i class="bi bi-exclamation-diamond"></i></p><h5 class="modal-title">Warning</h5>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to log out?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a id="myInput" class="btn btn-sm btn-danger" href="{% url 'logout' %}" role="button">Log out</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+<script>
+  var myModal = document.getElementById('myModal')
+  var myInput = document.getElementById('myInput')
+
+  myModal.addEventListener('shown.bs.modal', function () {
+  myInput.focus()
+})
+</script>
+
+<style>
+  #a {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#b {
+margin-bottom: -1px;
+  border-radius: 0;
+}
+
+#c {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#e{
+  margin: 10px 0;
+}
+
+.form-floating:focus-within {
+  z-index: 2;
+}
+
+.error-container{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+</style>
+
+<script>
+
+  var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
+  container: 'body'
+  })
+
+</script>
